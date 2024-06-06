@@ -6,9 +6,9 @@ dependencies:
   - numpy
   - pandas
   - scikit-learn
-  - librosa
   - matplotlib
   - conda-forge::cudatoolkit=11.2
   - conda-forge::cudnn=8.1.0
   - pip:
     - tensorflow<2.11
+    - librosa
