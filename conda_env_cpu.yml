@@ -1,0 +1,12 @@
+name: audio_data_science_cpu
+dependencies:
+  - python=3.9
+  - pip
+  - jupyter
+  - numpy
+  - pandas
+  - scikit-learn
+  - librosa
+  - matplotlib
+  - pip:
+    - tensorflow
