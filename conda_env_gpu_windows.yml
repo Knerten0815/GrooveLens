@@ -1,0 +1,14 @@
+name: audio_data_science_gpu
+dependencies:
+  - python=3.9
+  - pip
+  - jupyter
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - conda-forge::cudatoolkit=11.2
+  - conda-forge::cudnn=8.1.0
+  - pip:
+    - tensorflow<2.11
+    - librosa
