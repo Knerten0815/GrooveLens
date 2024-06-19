@@ -7,8 +7,10 @@ dependencies:
   - pandas
   - scikit-learn
   - matplotlib
+  - seaborn
   - conda-forge::cudatoolkit=11.2
   - conda-forge::cudnn=8.1.0
+  - conda-forge::shap
   - pip:
     - tensorflow<2.11
     - librosa
