@@ -209,4 +209,3 @@ for _, midi_path in ipairs(midi_files) do
 end
 
 debug_msg("Script finished.")
-‚
