@@ -1,0 +1,120 @@
+import os
+import pandas as pd
+import librosa
+import numpy as np
+
+# Initialisieren der neuen Spalten mit None
+new_columns = [
+    "onset_env_mean", "onset_env_std", "mfcc_mean", "mfcc_std", 
+    "spectral_flux_mean", "spectral_flux_std", "spectral_contrast_mean", 
+    "spectral_contrast_std", "tonnetz_mean", "tonnetz_std", "rms_mean", 
+    "rms_std", "spectral_centroid_mean", "spectral_centroid_std", 
+    "spectral_bandwidth_mean", "spectral_bandwidth_std", 
+    "spectral_flatness_mean", "spectral_flatness_std", "tempogram_mean" ,"tempogram_std"
+]
+
+for col in new_columns:
+    data[col] = None
+
+# Iteration über den DataFrame
+for index, row in data.iterrows():
+    audio_path = os.path.join("Datasets/groove", row["audio_filename"])
+    
+    if not os.path.exists(audio_path):
+        print(f"File not found: {audio_path}")
+        continue
+
+    # Audio laden (als numpy-Array (y) und die samplerate (sr))
+    try:
+        y, sr = librosa.load(audio_path, sr=None)
+    except Exception as e:
+        print(f"Error loading {audio_path}: {e}")
+        continue
+    
+    # Dynamisch n_fft basierend auf der Länge des Audiosignals setzen
+    n_fft = min(512, len(y) // 2)
+    hop_length = n_fft // 2
+    
+    # Berechnung der Merkmale
+    onset_env = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
+    onset_env_mean = onset_env.mean()
+    onset_env_std = onset_env.std()
+    
+    # Berechnen des STFT und des Spectral Flux
+    stft = np.abs(librosa.stft(y, n_fft=n_fft, hop_length=hop_length))
+    spectral_flux = np.sqrt(np.mean((np.diff(stft, axis=1))**2, axis=0))
+    spectral_flux_mean = spectral_flux.mean()
+    spectral_flux_std = spectral_flux.std()
+
+    # Reduziere n_mels und passe fmax an, um leere Filter zu vermeiden
+    n_mels = 40
+    fmax = sr / 2
+
+    mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, n_fft=n_fft, hop_length=hop_length, n_mels=n_mels, fmax=fmax)
+    mfcc_mean = mfcc.mean()
+    mfcc_std = mfcc.std()
+
+    spectral_contrast = librosa.feature.spectral_contrast(y=y, sr=sr, n_fft=n_fft, hop_length=hop_length)
+    spectral_contrast_mean = spectral_contrast.mean()
+    spectral_contrast_std = spectral_contrast.std()
+
+    tonnetz = librosa.feature.tonnetz(y=y, sr=sr, hop_length=hop_length)
+    tonnetz_mean = tonnetz.mean()
+    tonnetz_std = tonnetz.std()
+
+    rms = librosa.feature.rms(y=y, frame_length=n_fft, hop_length=hop_length)
+    rms_mean = rms.mean()
+    print(rms_mean)
+    rms_std = rms.std()
+
+    spectral_centroid = librosa.feature.spectral_centroid(y=y, sr=sr, n_fft=n_fft, hop_length=hop_length)
+    spectral_centroid_mean = spectral_centroid.mean()
+    spectral_centroid_std = spectral_centroid.std()
+
+    spectral_bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr, n_fft=n_fft, hop_length=hop_length)
+    spectral_bandwidth_mean = spectral_bandwidth.mean()
+    spectral_bandwidth_std = spectral_bandwidth.std()
+
+    spectral_flatness = librosa.feature.spectral_flatness(y=y, n_fft=n_fft, hop_length=hop_length)
+    spectral_flatness_mean = spectral_flatness.mean()
+    spectral_flatness_std = spectral_flatness.std()
+
+    tempogram = librosa.feature.tempogram_ratio(y=y, sr=sr)
+    tempogram_mean = librosa.feature.tempogram_ratio(y=y, sr=sr).mean()
+    tempogram_std = librosa.feature.tempogram_ratio(y=y, sr=sr).std()
+
+    # Überprüfen der Berechnungen vor dem Schreiben in den DataFrame
+    print(f"Processed {audio_path}")
+    print(f"onset_env_mean: {onset_env_mean}, onset_env_std: {onset_env_std}")
+    print(f"mfcc_mean: {mfcc_mean}, mfcc_std: {mfcc_std}")
+    print(f"spectral_flux_mean: {spectral_flux_mean}, spectral_flux_std: {spectral_flux_std}")
+    print(f"spectral_contrast_mean: {spectral_contrast_mean}, spectral_contrast_std: {spectral_contrast_std}")
+    print(f"tonnetz_mean: {tonnetz_mean}, tonnetz_std: {tonnetz_std}")
+    print(f"rms_mean: {rms_mean}, rms_std: {rms_std}")
+    print(f"spectral_centroid_mean: {spectral_centroid_mean}, spectral_centroid_std: {spectral_centroid_std}")
+    print(f"spectral_bandwidth_mean: {spectral_bandwidth_mean}, spectral_bandwidth_std: {spectral_bandwidth_std}")
+    print(f"spectral_flatness_mean: {spectral_flatness_mean}, spectral_flatness_std: {spectral_flatness_std}")
+
+
+    # Schreiben der berechneten Werte in den DataFrame
+    data.loc[index, 'onset_env_mean'] = onset_env_mean
+    data.loc[index, 'onset_env_std'] = onset_env_std
+    data.loc[index, 'mfcc_mean'] = mfcc_mean
+    data.loc[index, 'mfcc_std'] = mfcc_std
+    data.loc[index, 'spectral_flux_mean'] = spectral_flux_mean
+    data.loc[index, 'spectral_flux_std'] = spectral_flux_std
+    data.loc[index, 'spectral_contrast_mean'] = spectral_contrast_mean
+    data.loc[index, 'spectral_contrast_std'] = spectral_contrast_std
+    data.loc[index, 'tonnetz_mean'] = tonnetz_mean
+    data.loc[index, 'tonnetz_std'] = tonnetz_std
+    data.loc[index, 'rms_mean'] = rms_mean
+    data.loc[index, 'rms_std'] = rms_std
+    data.loc[index, 'spectral_centroid_mean'] = spectral_centroid_mean
+    data.loc[index, 'spectral_centroid_std'] = spectral_centroid_std
+    data.loc[index, 'spectral_bandwidth_mean'] = spectral_bandwidth_mean
+    data.loc[index, 'spectral_bandwidth_std'] = spectral_bandwidth_std
+    data.loc[index, 'spectral_flatness_mean'] = spectral_flatness_mean
+    data.loc[index, 'spectral_flatness_std'] = spectral_flatness_std
+    print(row)
+
+print(data)
