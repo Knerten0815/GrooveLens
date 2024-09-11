@@ -1,6 +1,6 @@
 # Classification Report for UNCROPPED_IMAGES
 
-## __Hamming Loss__ = 0.6029411764705882
+__Hamming Loss__ = 0.6029411764705882
 
 | precision | recall | f1-score | support |
 | --- | --- | --- | --- |
