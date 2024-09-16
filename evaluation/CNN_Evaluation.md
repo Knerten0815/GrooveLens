@@ -1,6 +1,29 @@
 Press `Ctrl+Shift+V` in VSCode to preview the markdown.
 
-# Classification Report for RANDOM_FOREST
+# Classification Report for RANDOM_FOREST_NO_LEAKAGE
+
+__Hamming Loss__ = 0.5456989247311828
+
+| precision | recall | f1-score | support |
+| --- | --- | --- | --- |
+|  |
+| funk | 0.49 | 0.36 | 0.42 | 61 |
+| hiphop | 0.43 | 0.53 | 0.48 | 62 |
+| jazz | 0.59 | 0.56 | 0.58 | 62 |
+| latin | 0.38 | 0.45 | 0.41 | 60 |
+| pop | 0.46 | 0.32 | 0.38 | 66 |
+| rock | 0.42 | 0.51 | 0.46 | 61 |
+|  |
+| accuracy | 0.45 | 372 |
+| macro | avg | 0.46 | 0.46 | 0.45 | 372 |
+| weighted | avg | 0.46 | 0.45 | 0.45 | 372 |
+
+
+![Image](..\evaluation\images\confusion_matrix_RANDOM_FOREST_NO_LEAKAGE.png)
+
+
+# Classification Report for RANDOM_FOREST (with Data Leakage)
+{'max_depth': 50, 'min_samples_leaf': 2, 'n_estimators': 50}  grid_search_score: 0.671875
 
 __Hamming Loss__ = 0.37916666666666665
 
@@ -21,7 +44,29 @@ __Hamming Loss__ = 0.37916666666666665
 
 ![Image](..\evaluation\images\confusion_matrix_RANDOM_FOREST.png)
 
-# Classification Report for CROPPED_IMAGES_SMALL2
+# Classification Report for CROPPED_IMAGES_SMALL (no more data leakage)
+
+__Hamming Loss__ = 0.7849462365591398
+
+| precision | recall | f1-score | support |
+| --- | --- | --- | --- |
+|  |
+| funk | 0.11 | 0.14 | 0.12 | 28 |
+| hiphop | 0.33 | 0.19 | 0.25 | 36 |
+| jazz | 0.18 | 0.21 | 0.19 | 29 |
+| latin | 0.38 | 0.48 | 0.43 | 27 |
+| pop | 0.24 | 0.11 | 0.15 | 36 |
+| rock | 0.14 | 0.20 | 0.16 | 30 |
+|  |
+| accuracy | 0.22 | 186 |
+| macro | avg | 0.23 | 0.22 | 0.22 | 186 |
+| weighted | avg | 0.23 | 0.22 | 0.21 | 186 |
+
+
+![Image](..\evaluation\images\confusion_matrix_CROPPED_IMAGES_SMALL3.png)
+
+
+# Classification Report for CROPPED_IMAGES_SMALL (but with Data Leakage)
 
 __Hamming Loss__ = 0.6777777777777778
 
@@ -43,7 +88,7 @@ __Hamming Loss__ = 0.6777777777777778
 ![Image](..\evaluation\images\confusion_matrix_CROPPED_IMAGES_SMALL2.png)
 
 
-# Classification Report for BALANCED_DATA & CROPPED_IMAGES
+# Classification Report for CROPPED_IMAGES (but with Data Leakage)
 
 __Hamming Loss__ = 0.7111111111111111
 
