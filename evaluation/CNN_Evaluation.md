@@ -2,47 +2,25 @@ Press `Ctrl+Shift+V` in VSCode to preview the markdown.
 
 # Classification Report for RANDOM_FOREST_NO_LEAKAGE
 
-__Hamming Loss__ = 0.5456989247311828
+__Hamming Loss__ = 0.5295698924731183
 
 | precision | recall | f1-score | support |
 | --- | --- | --- | --- |
 |  |
-| funk | 0.49 | 0.36 | 0.42 | 61 |
-| hiphop | 0.43 | 0.53 | 0.48 | 62 |
-| jazz | 0.59 | 0.56 | 0.58 | 62 |
-| latin | 0.38 | 0.45 | 0.41 | 60 |
-| pop | 0.46 | 0.32 | 0.38 | 66 |
-| rock | 0.42 | 0.51 | 0.46 | 61 |
+| funk | 0.56 | 0.39 | 0.46 | 61 |
+| hiphop | 0.45 | 0.56 | 0.50 | 62 |
+| jazz | 0.67 | 0.58 | 0.62 | 62 |
+| latin | 0.37 | 0.45 | 0.41 | 60 |
+| pop | 0.45 | 0.30 | 0.36 | 66 |
+| rock | 0.41 | 0.54 | 0.47 | 61 |
 |  |
-| accuracy | 0.45 | 372 |
-| macro | avg | 0.46 | 0.46 | 0.45 | 372 |
-| weighted | avg | 0.46 | 0.45 | 0.45 | 372 |
+| accuracy | 0.47 | 372 |
+| macro | avg | 0.49 | 0.47 | 0.47 | 372 |
+| weighted | avg | 0.49 | 0.47 | 0.47 | 372 |
 
 
-![Image](..\evaluation\images\confusion_matrix_RANDOM_FOREST_NO_LEAKAGE.png)
+![Image](..\evaluation\images\confusion_matrix_RANDOM_FOREST_NO_LEAKAGE2.png)
 
-
-# Classification Report for RANDOM_FOREST (with Data Leakage)
-{'max_depth': 50, 'min_samples_leaf': 2, 'n_estimators': 50}  grid_search_score: 0.671875
-
-__Hamming Loss__ = 0.37916666666666665
-
-| precision | recall | f1-score | support |
-| --- | --- | --- | --- |
-|  |
-| funk | 0.48 | 0.54 | 0.51 | 39 |
-| hiphop | 0.68 | 0.66 | 0.67 | 38 |
-| jazz | 0.59 | 0.75 | 0.66 | 32 |
-| latin | 0.61 | 0.57 | 0.59 | 40 |
-| pop | 0.72 | 0.86 | 0.78 | 42 |
-| rock | 0.67 | 0.41 | 0.51 | 49 |
-|  |
-| accuracy | 0.62 | 240 |
-| macro | avg | 0.62 | 0.63 | 0.62 | 240 |
-| weighted | avg | 0.63 | 0.62 | 0.61 | 240 |
-
-
-![Image](..\evaluation\images\confusion_matrix_RANDOM_FOREST.png)
 
 # Classification Report for CROPPED_IMAGES_SMALL (no more data leakage)
 
