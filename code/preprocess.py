@@ -22,7 +22,7 @@ def generate_spectogram(mel_spect, filesuffix):
 
 def audio_feature_extraction(y, sr, stft, n_fft, hop_length):
     onset_env = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
-    onset_frames = librosa.onset.onset_detect(onset_envelope=onset_env, sr=sr)
+    #onset_frames = librosa.onset.onset_detect(onset_envelope=onset_env, sr=sr)
     
     mel_spect = librosa.feature.melspectrogram(y=y, sr=sr, n_fft=n_fft, hop_length=hop_length)
     mel_spect = librosa.power_to_db(mel_spect, ref=np.max)
@@ -36,9 +36,9 @@ def audio_feature_extraction(y, sr, stft, n_fft, hop_length):
     spectral_flux_mean = spectral_flux.mean()
     spectral_flux_std = spectral_flux.std()
     
-    bpm_extracted, beats = librosa.beat.beat_track(y=y, sr=sr, start_bpm=110, hop_length=hop_length)
-    if isinstance(bpm_extracted, np.ndarray):
-        bpm_extracted = float(bpm_extracted[0])
+    # bpm_extracted, beats = librosa.beat.beat_track(y=y, sr=sr, start_bpm=110, hop_length=hop_length)
+    # if isinstance(bpm_extracted, np.ndarray):
+    #     bpm_extracted = float(bpm_extracted[0])
 
     # Reduziere n_mels und passe fmax an, um leere Filter zu vermeiden
     n_mels = 40
@@ -77,10 +77,10 @@ def audio_feature_extraction(y, sr, stft, n_fft, hop_length):
     tempogram_std = librosa.feature.tempogram_ratio(y=y, sr=sr).std()
     
     return {
-        'onset_strengths': onset_env,
-        'onset_frames': onset_frames,
+        #'onset_strengths': onset_env,
+        #'onset_frames': onset_frames,
         'melspectogram': mel_spect,
-        'bpm_extracted': bpm_extracted,
+        #'bpm_extracted': bpm_extracted,
         'onset_env_mean': onset_env_mean,
         'onset_env_std': onset_env_std,
         'spectral_flux_mean': spectral_flux_mean,
@@ -126,10 +126,10 @@ def process_file(file, sampling_rate, start, end):
         print(f"Error loading {file}: {e}")
         return
     
-    feature_df = pd.DataFrame(columns=['onset_strengths', 'onset_frames', 'melspectogram', 'bpm_extracted',
+    feature_df = pd.DataFrame(columns=['melspectogram', 'bpm_extracted',
                                        'onset_env_mean', 'onset_env_std',
-                                       'spectral_flux_mean', 'spectral_flux_std',
                                        'mfcc_mean', 'mfcc_std',
+                                       'spectral_flux_mean', 'spectral_flux_std',
                                        'spectral_contrast_mean', 'spectral_contrast_std',
                                        'tonnetz_mean', 'tonnetz_std', 
                                        'rms_mean', 'rms_std',
@@ -138,10 +138,21 @@ def process_file(file, sampling_rate, start, end):
                                        'spectral_flatness_mean', 'spectral_flatness_std',
                                        'tempogram_mean', 'tempogram_std'])
     
+    # extract bpm from the whole track
+    n_fft = min(1024, len(y))
+    hop_length = n_fft // 2
+    bpm_extracted, beats = librosa.beat.beat_track(y=y, sr=sr, start_bpm=110, hop_length=hop_length)
+    if isinstance(bpm_extracted, np.ndarray):
+        bpm_extracted = float(bpm_extracted[0])
+    
+    # process audio features for all 3 second slices of the track
     print(f"Processing {file}. Duration: {duration}")
     for i in tqdm(range(0, int(duration)-2, 3)):
         y_slice = y[i*sr:(i+3)*sr]
         features = process_sample(y_slice, sr, i)
         feature_df = pd.concat([feature_df, features.to_frame().T], ignore_index=True)
+    
+    # write the extracted bpm to all entries of the dataframe
+    feature_df['bpm_extracted'] = bpm_extracted
     
     return feature_df
