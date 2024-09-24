@@ -115,6 +115,7 @@ def process_sample(y, sr, filesuffix):
     return pd.Series(features)
 
 def process_file(file, sampling_rate, start, end):
+    print(f"Processing file {file}...")
     try:
         if(end is None):
             y, sr = librosa.load(file, sr=sampling_rate)
@@ -146,7 +147,7 @@ def process_file(file, sampling_rate, start, end):
         bpm_extracted = float(bpm_extracted[0])
     
     # process audio features for all 3 second slices of the track
-    print(f"Processing {file}. Duration: {duration}")
+    print(f"Extracting features and generating spectograms from 3 second samples. Total audio duration: {duration:.2f} seconds.")
     for i in tqdm(range(0, int(duration)-2, 3)):
         y_slice = y[i*sr:(i+3)*sr]
         features = process_sample(y_slice, sr, i)
