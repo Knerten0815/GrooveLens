@@ -13,7 +13,7 @@
 
 1. Clone the repository:
     ```bash
-    git clone [https://github.com/Knerten0815/GrooveLens]
+    git clone https://github.com/Knerten0815/GrooveLens
     cd GrooveLens
     ```
 
