@@ -1,4 +1,4 @@
-name: audio_data_science_cpu
+name: groovelens
 dependencies:
   - python=3.9
   - pip
