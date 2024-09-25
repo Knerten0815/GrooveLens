@@ -6,8 +6,9 @@ dependencies:
   - numpy
   - pandas
   - scikit-learn
-  - librosa
   - matplotlib
+  - seaborn
+  - conda-forge::shap
   - pip:
-    - tensorflow
+    - tensorflow<2.11
     - librosa

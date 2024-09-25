@@ -4,6 +4,7 @@ from code import random_forest_predict
 import argparse
 import shutil
 import numpy as np
+import keras
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Predict the genre of a drum beat.')

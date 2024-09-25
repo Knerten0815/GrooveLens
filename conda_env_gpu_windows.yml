@@ -8,9 +8,11 @@ dependencies:
   - scikit-learn
   - matplotlib
   - seaborn
+  - conda-forge::audioread
   - conda-forge::cudatoolkit=11.2
   - conda-forge::cudnn=8.1.0
   - conda-forge::shap
   - pip:
     - tensorflow<2.11
+    - h5py==3.11.0
     - librosa

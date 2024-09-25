@@ -8,6 +8,7 @@
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
+  - [Training](#training)
 
 ## Installation
 
@@ -24,9 +25,9 @@
 
     Windows users can run the model on their GPU for better performance when using the ``conda_env_gpu_windows.yml`` file instead. 
 
-3. Download the model files from [here](https://fhd.sharepoint.com/:u:/t/GeoCougher/EXtLhl6SuUNEobNJPG8ZZsABpdeIw7mlaiTu82cEWfJubQ?e=B3i9DU) and extract the contents to the root folder.
-4. If you want to train the model yourself, download the [Groove MIDI Dataset](https://magenta.tensorflow.org/datasets/groove) and extract the files to a ``Datasets`` folder in the root directory.
-5. If you only want to evaluate the model and skip the preprocessing, you can download the CSV file wih the extracted audio features and the generated spectograms from [here](https://fhd.sharepoint.com/:u:/t/GeoCougher/ESW0npAsNc5FqD1C8cuNDZgBg4i-Tt4ISpRhM5lW7AX78w?e=mi5MU7). Extract the contents to the root folder.
+3. Download the model files from [here](https://fhd.sharepoint.com/:u:/t/GeoCougher/EaF08piRA5dGsSP2WPbNJYIBPctSsoZXcOeYblOt9E0dVQ?e=PfgZUT) and extract the contents to the root folder.
+4. (optional) If you want to train the model yourself, download the [Groove MIDI Dataset](https://magenta.tensorflow.org/datasets/groove) and extract the files to a ``Datasets`` folder in the root directory.
+5. (optional) If you only want to evaluate the model and skip the preprocessing, you can download the CSV file wih the extracted audio features and the generated spectograms from [here](https://fhd.sharepoint.com/:u:/t/GeoCougher/ER8HVC-BZo5PkVHp7IrK16gBLDlLeltOh4eJSpoVCKKQeA?e=X3gAF1). Extract the contents to the root folder.
 
 Your folder structure should look something like this:
 ```plaintext
@@ -64,3 +65,6 @@ GrooveLens/
     ```
 
     You can also use the arguments ``--start`` and ``--end`` to specify wich part of the audio file you want to classify. Use the ``--sampling_rate`` argument if your files sampling rate is not 44100 Hz.
+
+## Training
+
